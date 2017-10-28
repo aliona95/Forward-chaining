@@ -7,9 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
-    private static String filename = "file1.txt";
+    private static String filename = "";
     private static ArrayList<Production> productions = new ArrayList<Production>();
     private static List<String> facts;
     private static String goal;
@@ -23,8 +24,32 @@ public class Main {
     private static Boolean consistentInFacts = false;
     private static Boolean isFlag2 = false;
     private static ArrayList<Integer> path = new ArrayList<Integer>();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
+        System.out.println("Pasirinkite failą: 1 -> file1.txt, 2 -> file2.txt, 3 -> file3.txt, ...");
+        switch (scanner.nextInt()) {
+            case 1:
+                filename = "file1.txt";
+                break;
+            case 2:
+                filename = "file2.txt";
+                break;
+            case 3:
+                filename = "file3.txt";
+                break;
+            case 4:
+                filename = "file4.txt";
+                break;
+            case 5:
+                filename = "file5.txt";
+                break;
+            case 6:
+                filename = "file6.txt";
+                break;
+            default:
+                System.out.println("ERROR");
+        }
         BufferedReader br = new BufferedReader(new FileReader(filename));
 
         String line;
@@ -64,21 +89,26 @@ public class Main {
         System.out.println("\n");
         System.out.println("  3) Tikslas");
         System.out.print("     " + goal + "\n\n");
-        System.out.println("2 DALIS. Vykdymas");
-        forwardChaining();
-        if(GDB.contains(goal)) {
-            System.out.println("   Tikslas gautas.");
+        if(facts.contains(goal)){
             System.out.println("\n3 DALIS. Rezultatai");
-            System.out.println("    1) Tikslas " + goal + " išvestas.");
-            System.out.print("    2) Kelias: ");
+            System.out.println("  Tikslas " + goal + " tarp faktų. Kelias tuščias.");
         }else{
-            System.out.println("   Tikslas negautas.");
-        }
-        for (int i = 0; i < path.size(); i++) {
-            if (i != path.size() - 1) {
-                System.out.print("R" + path.get(i) + ", ");
-            } else {
-                System.out.print("R" + path.get(i) + ".");
+            System.out.println("2 DALIS. Vykdymas");
+            forwardChaining();
+            if(GDB.contains(goal)) {
+                System.out.println("   Tikslas gautas.");
+                System.out.println("\n3 DALIS. Rezultatai");
+                System.out.println("    1) Tikslas " + goal + " išvestas.");
+                System.out.print("    2) Kelias: ");
+                for (int i = 0; i < path.size(); i++) {
+                    if (i != path.size() - 1) {
+                        System.out.print("R" + path.get(i) + ", ");
+                    } else {
+                        System.out.print("R" + path.get(i) + ".");
+                    }
+                }
+            }else{
+                System.out.println("   Tikslas negautas.");
             }
         }
     }
